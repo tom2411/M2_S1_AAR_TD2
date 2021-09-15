@@ -9,12 +9,15 @@ package dtos;
 public class User {
     private String login;
     private String password;
+    private String nickname;
+    private String monhumeur;
 
     public User(){}
 
-    public User(String login, String password) {
+    public User(String login, String password, String nickname) {
         this.login = login;
         this.password = password;
+        this.nickname = nickname;
     }
 
     public String getLogin() {
@@ -32,4 +35,21 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getMonhumeur() {
+        return monhumeur;
+    }
+
+    public void setMonhumeur(String monhumeur) {
+        this.monhumeur = monhumeur;
+    }
 }
+

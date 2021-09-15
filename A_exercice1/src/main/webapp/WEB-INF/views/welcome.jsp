@@ -7,6 +7,8 @@
 </head>
 <body>
 Bienvenue, ${username}.
+<br>
+Vous êtes ${humeur_du_jour}.
 
 <form action="${pageContext.request.contextPath}/logout">
     <button type="submit">se déconnecter</button>
