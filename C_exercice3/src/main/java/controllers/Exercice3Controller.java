@@ -20,6 +20,7 @@ public class Exercice3Controller {
     public String toLogin(Model model) {
         //ici on doit renvoyer un User du fait du traitement avec modelAttribute et path côté jsp
         model.addAttribute(new User());
+        model.addAttribute("humeurs",facade.getHumeurs());
         return("login");
     }
 
@@ -29,13 +30,16 @@ public class Exercice3Controller {
     public String checkLP(User user, BindingResult result, Model model){
         if (facade.checkLP(user.getLogin(),user.getPassword())) {
             // on place courant dans le modèle, mais il s'agit d'un attribut de session, il se retrouve ainsi conservé en session
-            model.addAttribute("courant",user.getLogin());
+            model.addAttribute("courant",facade.getSurnom(user.getLogin()));
+            System.out.println(user.getHumeur());
+            model.addAttribute("humeur_du_jour",user.getHumeur());
             model.addAttribute("username",user.getLogin());
             return "welcome";
         } else {
             // on crée à la volée un "ObjectError" : erreur globale dans l'objet (ici l'objet c'est l'instance de user où transitent les infos de login)
             result.addError(new ObjectError("user","Les informations saisies ne correspondent pas à un utilisateur connu."));
             System.out.println(result.hasErrors());
+            model.addAttribute("humeurs",facade.getHumeurs());
             // le user du model est renvoyé tel quel à la jsp, et on préserve les valeurs saisies (comment réinitialiser ?)
             return "login";
         }
@@ -52,6 +56,7 @@ public class Exercice3Controller {
     public String logout(SessionStatus status,Model model) {
         status.setComplete();
         model.addAttribute(new User());
+        model.addAttribute("humeurs",facade.getHumeurs());
         return "login";
     }
 }

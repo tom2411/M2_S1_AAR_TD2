@@ -29,7 +29,9 @@
     <title>Bienvenue</title>
 </head>
 <body>
-Bienvenue, <span th:text="${username}"/>.
+Bienvenue, <span th:text="${courant}"/>.
+<br>
+Vous êtes actuellement <span th:text="${humeur_du_jour}"/>
 
 <form th:action="@{/logout}">
     <button type="submit">se déconnecter</button>

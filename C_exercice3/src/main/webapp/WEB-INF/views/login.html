@@ -39,6 +39,11 @@
     <p>Login: <input type="text" th:field="*{login}" /></p>
 
     <p>Password: <input type="password" th:field="*{password}" /></p>
+
+    <select name="humeur" th:field="*{humeur}">
+        <option th:each="humeurUser : ${humeurs}" th:value="${humeurUser}" th:text="${humeurUser}"> </option>
+    </select>
+
     <p><button type="submit" value="Submit" /> Envoyer</button></p>
 
     <!-- /* la gestion des erreurs à la sauce thymeleaf */ -->
