@@ -1,6 +1,7 @@
 package controllers;
 
 import dtos.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,17 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import services.Compteur;
 import services.Facade;
 
 @Controller
 @SessionAttributes("courant")
 @RequestMapping("/")
 public class Exercice4Controller {
-    private Facade facade=Facade.getInstance();
+
+    @Autowired
+    private Facade facade;
+
+    @Autowired
+    private Compteur compteur;
+
     @RequestMapping("")
     public String toLogin(Model model) {
         //ici on doit renvoyer un User du fait du traitement avec modelAttribute et path côté jsp
         model.addAttribute(new User());
+        model.addAttribute("humeurs",facade.getHumeurs());
         return("login");
     }
 
@@ -29,14 +38,19 @@ public class Exercice4Controller {
     public String checkLP(User user, BindingResult result, Model model){
         if (facade.checkLP(user.getLogin(),user.getPassword())) {
             // on place courant dans le modèle, mais il s'agit d'un attribut de session, il se retrouve ainsi conservé en session
-            model.addAttribute("courant",user.getLogin());
+            model.addAttribute("courant",facade.getSurnom(user.getLogin()));
+            System.out.println(user.getHumeur());
+            model.addAttribute("humeur_du_jour",user.getHumeur());
             model.addAttribute("username",user.getLogin());
+            compteur.incr();
+            model.addAttribute("cpt", compteur.getCpt());
             return "welcome";
         } else {
             // on crée à la volée un "ObjectError" : erreur globale dans l'objet (ici l'objet c'est l'instance de user où transitent les infos de login)
             result.addError(new ObjectError("user","Les informations saisies ne correspondent pas à un utilisateur connu."));
             System.out.println(result.hasErrors());
             // le user du model est renvoyé tel quel à la jsp, et on préserve les valeurs saisies (comment réinitialiser ?)
+            model.addAttribute("humeurs",facade.getHumeurs());
             return "login";
         }
     }
@@ -52,6 +66,7 @@ public class Exercice4Controller {
     public String logout(SessionStatus status,Model model) {
         status.setComplete();
         model.addAttribute(new User());
+        model.addAttribute("humeurs",facade.getHumeurs());
         return "login";
     }
 }
