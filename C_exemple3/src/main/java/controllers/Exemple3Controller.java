@@ -13,14 +13,14 @@ import services.Facade;
 
 @Controller
 @SessionAttributes("courant")
-@RequestMapping("/")
+@RequestMapping("/bis")
 public class Exemple3Controller {
     private Facade facade=Facade.getInstance();
     @RequestMapping("")
     public String toLogin(Model model) {
         //ici on doit renvoyer un User du fait traitement avec modelAttribute et path côté jsp
         model.addAttribute(new User());
-        return("login");
+        return("loginbis");
     }
 
     // on passe un objet user en paramètre : mapping automatique des champs du formulaire
@@ -37,7 +37,7 @@ public class Exemple3Controller {
             result.addError(new ObjectError("user","Les informations saisies ne correspondent pas à un utilisateur connu."));
             System.out.println(result.hasErrors());
             // le user du model est renvoyé tel quel à la jsp, et on préserve les valeurs saisies (comment réinitialiser ?)
-            return "login";
+            return "loginbis";
         }
     }
 
@@ -53,7 +53,7 @@ public class Exemple3Controller {
         status.setComplete();
         model.addAttribute("courant",null);
         model.addAttribute(new User());
-        return "login";
+        return "loginbis";
     }
 
     @RequestMapping("fromlayout")
