@@ -23,4 +23,11 @@ public class Facade {
         return ((pwd!=null) && (pwd.equals(password)));
    }
 
+   public boolean changePassword(String login, String password){
+        if (users.get(login) != null){
+            users.replace(login,password);
+            return true;
+        }
+        return false;
+   }
 }

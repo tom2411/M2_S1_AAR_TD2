@@ -46,6 +46,8 @@ public class Exercice9Servlet extends HttpServlet {
                     break;
                 case "SimpleCheck":
                     simpleCheck(request,response);
+                case "change_password":
+                    changePassword(request, response);
             }
         }
 
@@ -69,7 +71,19 @@ public class Exercice9Servlet extends HttpServlet {
         }
     }
 
+    public void changePassword(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        String courant=(String) request.getSession().getAttribute("courant");
+        String new_password=request.getParameter("change_password");
+        if (facade.changePassword(courant,new_password)){
+            System.out.println("oK");
+        }else{
+            System.out.println("Non");
+        }
 
+        System.out.println(courant);
+        request.setAttribute("username",courant);
+        request.getRequestDispatcher("/WEB-INF/welcome.jsp").forward(request,response);
+    }
 
     public void simpleCheck(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         String courant=(String) request.getSession().getAttribute("courant");
@@ -83,4 +97,6 @@ public class Exercice9Servlet extends HttpServlet {
         request.getSession().removeAttribute("courant");
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
     }
+
+
 }

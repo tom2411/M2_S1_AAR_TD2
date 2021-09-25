@@ -18,6 +18,12 @@
     <button type="submit" name="TODO" value="SimpleCheck">Vérifier le login en session (en trace de serveur)</button>
 </form>
 
+<h1>Changer de mot de passe</h1>
+<form method="post">
+    <p>Password: <input type="password" name="change_password" /></p>
+    <button type="submit" name="TODO" value="change_password">changer de mot de passe</button>
+</form>
+
 <jsp:include page="session.jsp"></jsp:include>
 
 
