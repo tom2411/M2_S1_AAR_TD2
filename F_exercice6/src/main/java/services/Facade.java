@@ -1,7 +1,6 @@
 package services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -9,15 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
 public class Facade {
-
     private Map<String,String> users;
     private Map<String, String> nicknames;
     private List<String> humeurs;
-    @Autowired
+
     private Compteur compteur;
 
+    public void setCompteur(Compteur compteur) {
+        this.compteur = compteur;
+    }
 
     // On évite de toucher au constructeur... du coup on fait l'initialisation de la map dans une méthode annotée PostConstruct
     @PostConstruct
@@ -56,4 +56,6 @@ public class Facade {
     public Integer getCpt() {
         return this.compteur.getCpt();
     }
+
+
 }

@@ -10,10 +10,13 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+// On ajoute "services" dans la liste des packages susceptibles de contenir des composants Spring
+// ET on ne met pas ce type de commentaire en plein milieu des annotations !
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = {"controllers","services"})
 public class ClientWebConfig implements WebMvcConfigurer {
+
 
     @Bean
     @Description("Thymeleaf Template Resolver")
@@ -42,10 +45,17 @@ public class ClientWebConfig implements WebMvcConfigurer {
         viewResolver.setOrder(1);
         return viewResolver;
     }
-     /*  @Override
-        public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-            configurer.enable();
-        }
-*/
+
+    /*
+    @Bean
+    @Description("Spring Message Resolver")
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+    }
+
+
+     */
 
 }
